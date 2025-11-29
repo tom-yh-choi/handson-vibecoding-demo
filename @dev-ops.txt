@@ -1,0 +1,37 @@
+/init
+
+@.cursor/  에 있는 규칙들을 claude code에서 사용할 수 있도록 가져와줘.
+
+@global_windsurf_rules.md 의 내용도 가져와서 규칙으로 설정해줘.
+
+@CLAUDE.md 에 명명 규칙 섹션을 추가해줘. 명명 규칙에는 브랜칭 전략에 대한 내용도 추가해줘.
+
+모든 작업 브랜치는 gh issues와 연동되도록 하고 싶어. gh issue 번호를 작업 브랜치에 추가해줘.
+
+git init
+git remote add origin https://github.com/tom-yh-choi/handson-vibecoding-demo.git
+
+
+/resume 대화 이어가기
+/make-pr
+
+git init
+git remote add origin https://github.com/tom-yh-choi/handson-vibecoding-demo.git
+
+
+이 프로젝트를 원할하게 운영/개선해 나갈 수 있도록 DevOps를 강화하는 프로젝트를 진행하려고 해.
+먼저 프로젝트의 계획을 세우기 위해서 @docs/ 아래 폴덜르 ㄹ만들고 pre PRD 문서를 만들어줘.
+
+이 프로젝트는 연습용 프로젝트야. 비용은 최대한 프리티어 한도내에서 진행하고 빠르게 구현할 수 있는 MVP 접근방법을 사용해줘.
+이를 @docs/devops/pre-prd.md에 반영해줘.
+
+pre-prd.md 를 prd.md로 리네임해줘.
+
+DevOps 프로젝트 수행을 위한 테스크들을 문서로 정리해줘. 기간에 대한 산정은 하지 말고
+작업들을 최대한 세분화해줘.
+
+Phase1의 태스크들을 계획단계 포함애서 이슈로 등록해줘.
+
+필요한 라벨들을 미리 생성하고 이를 @CLAUDE.md에 명시해줘.
+
+/make-pr

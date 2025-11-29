@@ -1,0 +1,74 @@
+#!/bin/sh
+
+echo "[DEBUG] pre-commit 훅 시작: $(date)"
+echo "[DEBUG] 현재 디렉토리: $(pwd)"
+
+# 스테이징된 파일 목록 확인 및 출력
+echo "[DEBUG] 스테이징된 파일 목록:"
+git diff --cached --name-only
+echo "-------------------"
+
+# 프론트엔드 실행 코드(js/ts/tsx) 변경시에만 동작
+FRONTEND_CHANGED=$(git diff --cached --name-only | grep -E '^frontend/src/.*\.(js|ts|tsx)$' || true)
+echo "[DEBUG] 프론트엔드 변경 파일: $FRONTEND_CHANGED"
+
+if [ -n "$FRONTEND_CHANGED" ]; then
+  echo "[husky] 프론트엔드 실행 코드 변경 감지. lint, build, test를 실행합니다."
+  
+  echo "[DEBUG] lint 실행 시작..."
+  npm run frontend:lint -- --fix
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 프론트엔드 lint 실패"
+    exit 1
+  fi
+  
+  echo "[DEBUG] build 실행 시작..."
+  npm run frontend:build
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 프론트엔드 build 실패"
+    exit 1
+  fi
+  
+  echo "[DEBUG] test 실행 시작..."
+  npm run frontend:test
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 프론트엔드 test 실패"
+    exit 1
+  fi
+else
+  echo "[husky] 프론트엔드 실행 코드 변경 없음. 검증 건너뜀."
+fi
+
+# 백엔드 실행 코드(ts) 변경시에만 동작
+BACKEND_CHANGED=$(git diff --cached --name-only | grep -E '^backend/(src|lib|bin)/.*\.ts$' || true)
+echo "[DEBUG] 백엔드 변경 파일: $BACKEND_CHANGED"
+
+if [ -n "$BACKEND_CHANGED" ]; then
+  echo "[husky] 백엔드 실행 코드 변경 감지. lint, build, test를 실행합니다."
+  
+  echo "[DEBUG] lint 실행 시작..."
+  npm run backend:lint -- --fix
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 백엔드 lint 실패"
+    exit 1
+  fi
+  
+  echo "[DEBUG] build 실행 시작..."
+  npm run backend:build
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 백엔드 build 실패"
+    exit 1
+  fi
+  
+  echo "[DEBUG] test 실행 시작..."
+  npm run backend:test
+  if [ $? -ne 0 ]; then
+    echo "[ERROR] 백엔드 test 실패"
+    exit 1
+  fi
+else
+  echo "[husky] 백엔드 실행 코드 변경 없음. 검증 건너뜀."
+fi
+
+echo "[DEBUG] pre-commit 훅 종료: $(date)"
+echo "[DEBUG] 모든 검증 통과. 커밋을 진행합니다."

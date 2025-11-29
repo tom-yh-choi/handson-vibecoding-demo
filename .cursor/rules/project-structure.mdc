@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 프로젝트 구조 가이드
+
+이 프로젝트는 모노레포 구조로 구성되어 있으며, 프론트엔드와 백엔드가 통합되어 있습니다.
+
+## 디렉토리 구조
+
+```
+root/
+├── frontend/       # 프론트엔드(React + Mantine)
+├── backend/        # 백엔드(Node.js + TypeScript)
+│   ├── src/       # Lambda 함수 소스 코드
+│   └── lib/       # CDK 스택 정의
+└── shared/        # 공통 타입, 유틸리티 등
+```
+
+자세한 디렉토리 구조는 [아키텍처 개요](mdc:docs/design/architecture.md)를 참조하세요.
+
+## 주요 파일
+
+- [프론트엔드 설계](mdc:docs/design/frontend.md)
+- [백엔드 설계](mdc:docs/design/backend.md)
+- [인프라 설계](mdc:docs/design/infrastructure.md)
+- [보안 설계](mdc:docs/design/security.md)
+- [모니터링 설계](mdc:docs/design/monitoring.md)
+- [비용 최적화](mdc:docs/design/optimization.md)
+- [구현 계획](mdc:docs/design/implementation.md)
+
+## 개발 가이드라인
+
+1. 모든 코드는 TypeScript로 작성합니다.
+2. 프론트엔드는 React와 Mantine UI Kit를 사용합니다.
+3. 백엔드는 AWS 서버리스 아키텍처를 사용합니다.
+4. 모든 변경사항은 테스트를 포함해야 합니다.
+5. 코드 스타일은 ESLint와 Prettier를 따릅니다.
+
+자세한 개발 가이드라인은 [구현 계획](mdc:docs/design/implementation.md)을 참조하세요.

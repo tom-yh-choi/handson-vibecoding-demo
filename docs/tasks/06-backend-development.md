@@ -1,0 +1,103 @@
+# 6단계: 백엔드 개발 (프론트엔드 완료 후)
+
+- [x] **6.1 백엔드 프로젝트 설정**
+  - [x] Node.js + TypeScript 프로젝트 초기화 (backend/)
+  - [x] Jest 등 테스트 환경 설정
+  - [x] ESLint 및 Prettier 설정
+  - [x] 기본 디렉토리 구조 생성
+    - [x] src/: Lambda 함수 소스 코드
+    - [x] lib/: CDK 스택 정의
+    - [x] test/: 테스트 코드
+  - **커밋**: "백엔드 개발 환경 설정"
+  - **인수조건**:
+    - TypeScript 컴파일이 정상적으로 동작
+    - Jest 테스트 실행이 가능
+    - ESLint와 Prettier가 정상 동작
+    - CDK 앱이 초기화되어 있음
+
+- [x] **6.2 도메인 모델 및 인터페이스 구현 (TDD)**
+  - [x] Todo 도메인 모델 구현 (src/domain/)
+    - [x] Todo 엔티티 정의
+    - [x] Todo 리포지토리 인터페이스 정의
+    - [x] Todo 유스케이스 인터페이스 정의
+  - [x] User 도메인 모델 구현 (src/domain/)
+    - [x] User 엔티티 정의
+    - [x] User 리포지토리 인터페이스 정의
+    - [x] User 유스케이스 인터페이스 정의
+  - **커밋**: "도메인 모델 및 인터페이스 구현 (TDD)"
+  - **인수조건**:
+    - [x] 모든 도메인 모델에 대한 단위 테스트 통과
+    - [x] 인터페이스가 Clean Architecture 원칙을 준수
+    - [x] 테스트 커버리지 80% 이상 달성
+
+- [x] **6.3 CDK 스택 구현**
+  - [x] DatabaseStack 구현 (lib/database/)
+    - [x] DynamoDB 테이블 정의
+    - [x] GSI 설정
+    - [x] TTL 설정
+    - [x] 자동 스케일링 설정
+  - [x] AuthStack 구현 (lib/auth/)
+    - [x] Cognito User Pool 설정
+    - [x] App Client 설정
+    - [x] OAuth 설정
+  - [x] LambdaStack 구현 (lib/lambda/)
+    - [x] Lambda 함수 정의
+    - [x] 환경 변수 설정
+    - [x] IAM 역할 설정
+  - [x] ApiStack 구현 (lib/api/)
+    - [x] API Gateway 설정
+    - [x] CORS 설정
+    - [x] 인증 설정
+  - **커밋**: "CDK 스택 구현 (TDD)"
+  - **인수조건**:
+    - [x] CDK synth 명령이 정상 동작
+    - [x] 모든 스택이 의존성 관계를 올바르게 설정
+    - [x] IAM 권한이 최소 권한 원칙을 준수
+    - [x] 보안 그룹이 적절히 구성됨
+
+- [x] **6.4 유스케이스 구현 (TDD)**
+  - [x] Todo 유스케이스 구현 (src/application/)
+    - [x] Todo 생성 유스케이스
+    - [x] Todo 조회 유스케이스
+    - [x] Todo 수정 유스케이스
+    - [x] Todo 삭제 유스케이스
+  - [x] User 유스케이스 구현 (src/application/)
+    - [x] 사용자 인증 유스케이스
+    - [x] 사용자 정보 조회 유스케이스
+  - **커밋**: "유스케이스 구현 (TDD)"
+  - **인수조건**:
+    - [x] 모든 유스케이스에 대한 단위 테스트 통과
+    - [x] 도메인 모델과 인터페이스를 정확히 구현
+    - [x] 테스트 커버리지 80% 이상 달성
+
+- [x] **6.5 인프라 어댑터 구현 (TDD)**
+  - [x] DynamoDB 어댑터 구현 (src/infrastructure/dynamodb/)
+    - [x] Todo 리포지토리 구현
+    - [x] User 리포지토리 구현
+  - [x] Cognito 어댑터 구현 (src/infrastructure/cognito/)
+    - [x] 인증 서비스 구현
+  - **커밋**: "인프라 어댑터 구현 (TDD)"
+  - **인수조건**:
+    - [x] 모든 어댑터에 대한 단위 테스트 통과
+    - [ ] 외부 서비스와의 통합 테스트 통과
+    - [x] 테스트 커버리지 80% 이상 달성
+
+- [x] **6.6 API 컨트롤러 및 Lambda 핸들러 구현**
+  - [x] REST API 컨트롤러 구현 (src/interfaces/rest/)
+    - [x] Todo 컨트롤러
+    - [x] User 컨트롤러
+  - [x] Lambda 핸들러 구현 (src/main/)
+    - [x] API Gateway 이벤트 처리
+    - [x] 에러 처리
+    - [x] 로깅
+  - **커밋**: "API 컨트롤러 및 Lambda 핸들러 구현"
+  - **인수조건**:
+    - 모든 API 엔드포인트가 정상 동작
+    - 에러 처리가 적절히 구현됨
+    - 로깅이 CloudWatch에 정상적으로 기록됨
+    - 테스트 커버리지 80% 이상 달성
+
+- [ ] **6.7 API Gateway 스택 및 라우팅 설정**
+- [ ] **6.8 Cognito 스택 및 사용자 풀 설정**
+- [ ] **6.9 CI/CD 파이프라인 설정**
+- [ ] **6.10 배포 및 E2E 테스트** 

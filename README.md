@@ -94,6 +94,36 @@ setup → frontend (lint/build/test)
 - **커뮤니케이션**: 한국어 사용
 - **Pre-commit**: `frontend/src/**/*.{js,ts,tsx}`, `backend/{src,lib,bin}/**/*.ts` 변경 시 자동 검증
 
+## Claude Code 커스텀 명령어 및 에이전트
+
+이 프로젝트는 Claude Code의 커스텀 명령어와 에이전트를 활용하여 개발 워크플로우를 자동화합니다.
+
+### 커스텀 명령어
+
+| 명령어 | 설명 |
+|--------|------|
+| `/make-pr` | PR 생성 워크플로우 자동화 (이슈 확인/생성 → 브랜치 생성 → 커밋 → PR 생성) |
+| `/document_update` | 프로젝트 문서 최신화 (README, docs, 패키지별 문서) |
+
+### 커스텀 에이전트
+
+| 에이전트 | 설명 |
+|----------|------|
+| `pr-reviewer` | PR 코드 리뷰 자동화 (코드 품질, 보안, 테스트 커버리지 검토) |
+
+### 사용 예시
+
+```bash
+# PR 생성 워크플로우
+/make-pr
+
+# 문서 최신화
+/document_update
+
+# PR 리뷰 요청 (pr-reviewer 에이전트 자동 활성화)
+"PR #20을 리뷰해줘"
+```
+
 ## 문서
 
 - [요구사항](docs/requirements.md)

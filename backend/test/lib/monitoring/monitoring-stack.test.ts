@@ -156,4 +156,45 @@ describe('MonitoringStack', () => {
     expect(dashboardBody).toContain('DynamoDB Throttled Requests');
     expect(dashboardBody).toContain('DynamoDB Latency');
   });
+
+  it('should include all DynamoDB operation types in latency metrics', () => {
+    const { app, todoLambda, userLambda, api, todoTable, userTable } = createTestResources();
+
+    const monitoringStack = new MonitoringStack(app, 'MonitoringStack', {
+      todoLambda,
+      userLambda,
+      api,
+      todoTable,
+      userTable,
+    });
+
+    const template = Template.fromStack(monitoringStack);
+    const dashboards = template.findResources('AWS::CloudWatch::Dashboard');
+    const dashboardBody = JSON.stringify(Object.values(dashboards)[0]);
+
+    // Check all DynamoDB operation types are monitored
+    const operations = ['GetItem', 'PutItem', 'UpdateItem', 'DeleteItem', 'Query', 'Scan'];
+    operations.forEach((operation) => {
+      expect(dashboardBody).toContain(operation);
+    });
+  });
+
+  it('should use dynamic API name reference', () => {
+    const { app, todoLambda, userLambda, api, todoTable, userTable } = createTestResources();
+
+    const monitoringStack = new MonitoringStack(app, 'MonitoringStack', {
+      todoLambda,
+      userLambda,
+      api,
+      todoTable,
+      userTable,
+    });
+
+    const template = Template.fromStack(monitoringStack);
+    const dashboards = template.findResources('AWS::CloudWatch::Dashboard');
+    const dashboardBody = JSON.stringify(Object.values(dashboards)[0]);
+
+    // API name should be referenced dynamically (Test API from test resources)
+    expect(dashboardBody).toContain('Test API');
+  });
 });

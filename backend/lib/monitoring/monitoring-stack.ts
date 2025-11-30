@@ -67,7 +67,9 @@ export class MonitoringStack extends cdk.Stack {
       height: 6,
     });
 
-    // API Gateway 메트릭 위젯
+    // API Gateway 메트릭 위젯 - restApiName을 동적으로 참조
+    const apiName = api.restApiName;
+
     const apiLatencyWidget = new cloudwatch.GraphWidget({
       title: 'API Gateway Latency (ms)',
       left: [
@@ -75,7 +77,7 @@ export class MonitoringStack extends cdk.Stack {
           namespace: 'AWS/ApiGateway',
           metricName: 'Latency',
           dimensionsMap: {
-            ApiName: 'Todo App API',
+            ApiName: apiName,
           },
           statistic: 'Average',
           period: cdk.Duration.minutes(5),
@@ -92,7 +94,7 @@ export class MonitoringStack extends cdk.Stack {
           namespace: 'AWS/ApiGateway',
           metricName: '4XXError',
           dimensionsMap: {
-            ApiName: 'Todo App API',
+            ApiName: apiName,
           },
           statistic: 'Sum',
           period: cdk.Duration.minutes(5),
@@ -109,7 +111,7 @@ export class MonitoringStack extends cdk.Stack {
           namespace: 'AWS/ApiGateway',
           metricName: '5XXError',
           dimensionsMap: {
-            ApiName: 'Todo App API',
+            ApiName: apiName,
           },
           statistic: 'Sum',
           period: cdk.Duration.minutes(5),
@@ -126,7 +128,7 @@ export class MonitoringStack extends cdk.Stack {
           namespace: 'AWS/ApiGateway',
           metricName: 'Count',
           dimensionsMap: {
-            ApiName: 'Todo App API',
+            ApiName: apiName,
           },
           statistic: 'Sum',
           period: cdk.Duration.minutes(5),
@@ -195,30 +197,35 @@ export class MonitoringStack extends cdk.Stack {
       height: 6,
     });
 
+    // DynamoDB 작업 타입별 레이턴시 - 모든 주요 작업 모니터링
+    const dynamoDbOperations = ['GetItem', 'PutItem', 'UpdateItem', 'DeleteItem', 'Query', 'Scan'];
+
     const dynamoDbLatencyWidget = new cloudwatch.GraphWidget({
       title: 'DynamoDB Latency (ms)',
-      left: [
+      left: dynamoDbOperations.flatMap((operation) => [
         new cloudwatch.Metric({
           namespace: 'AWS/DynamoDB',
           metricName: 'SuccessfulRequestLatency',
           dimensionsMap: {
             TableName: todoTable.tableName,
-            Operation: 'GetItem',
+            Operation: operation,
           },
           statistic: 'Average',
           period: cdk.Duration.minutes(5),
+          label: `Todo-${operation}`,
         }),
         new cloudwatch.Metric({
           namespace: 'AWS/DynamoDB',
           metricName: 'SuccessfulRequestLatency',
           dimensionsMap: {
             TableName: userTable.tableName,
-            Operation: 'GetItem',
+            Operation: operation,
           },
           statistic: 'Average',
           period: cdk.Duration.minutes(5),
+          label: `User-${operation}`,
         }),
-      ],
+      ]),
       width: 12,
       height: 6,
     });

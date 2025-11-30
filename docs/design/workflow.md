@@ -593,6 +593,115 @@ git branch -d feat/123-feature-name
 
 ---
 
+## 10. Claude Code 자동화
+
+이 프로젝트는 Claude Code의 커스텀 명령어와 에이전트를 활용하여 개발 워크플로우를 자동화합니다.
+
+### 10.1 커스텀 명령어
+
+```mermaid
+flowchart LR
+    subgraph Commands["커스텀 명령어"]
+        A["/make-pr"] --> A1["PR 생성 워크플로우 자동화"]
+        B["/document_update"] --> B1["프로젝트 문서 최신화"]
+    end
+
+    subgraph MakePR["make-pr 상세"]
+        A1 --> C1["git status/diff 확인"]
+        C1 --> C2["오픈 이슈 확인"]
+        C2 --> C3{"이슈 존재?"}
+        C3 -->|No| C4["이슈 생성"]
+        C3 -->|Yes| C5["브랜치 생성"]
+        C4 --> C5
+        C5 --> C6["커밋 생성"]
+        C6 --> C7["PR 생성"]
+    end
+```
+
+| 명령어 | 설명 | 사용 시점 |
+|--------|------|----------|
+| `/make-pr` | PR 생성 워크플로우 자동화 | 작업 완료 후 PR 생성 시 |
+| `/document_update` | 프로젝트 문서 최신화 | 코드베이스 변경 후 문서 업데이트 시 |
+
+### 10.2 커스텀 에이전트
+
+```mermaid
+flowchart TD
+    subgraph Agent["pr-reviewer 에이전트"]
+        A["PR 리뷰 요청"] --> B["gh cli로 PR 정보 조회"]
+        B --> C["코드 변경 분석"]
+        C --> D["품질 검토"]
+        D --> E["피드백 생성"]
+    end
+
+    subgraph Review["검토 항목"]
+        D --> D1["코드 품질"]
+        D --> D2["보안 취약점"]
+        D --> D3["테스트 커버리지"]
+        D --> D4["아키텍처 준수"]
+        D --> D5["컨벤션 준수"]
+    end
+
+    subgraph Output["출력 형식"]
+        E --> F1["주요 이슈"]
+        E --> F2["개선 제안"]
+        E --> F3["승인 여부"]
+    end
+```
+
+| 에이전트 | 설명 | 트리거 |
+|----------|------|--------|
+| `pr-reviewer` | PR 코드 리뷰 자동화 | "PR #N을 리뷰해줘" |
+
+### 10.3 사용 예시
+
+```bash
+# PR 생성 워크플로우 (이슈 확인/생성 → 브랜치 생성 → 커밋 → PR 생성)
+/make-pr
+
+# 문서 최신화 (README, docs, 패키지별 문서)
+/document_update
+
+# PR 리뷰 요청 (pr-reviewer 에이전트 자동 활성화)
+"PR #20을 리뷰해줘"
+```
+
+### 10.4 자동화 워크플로우
+
+```mermaid
+sequenceDiagram
+    participant Dev as 개발자
+    participant Claude as Claude Code
+    participant GH as GitHub
+
+    Note over Dev,GH: 작업 완료 후
+
+    Dev->>Claude: /make-pr
+    Claude->>Claude: git status/diff 확인
+    Claude->>GH: 오픈 이슈 조회
+    Claude->>GH: 이슈 생성 (필요시)
+    Claude->>Claude: 브랜치 생성
+    Claude->>Claude: 커밋 생성
+    Claude->>GH: PR 생성
+    GH-->>Dev: PR URL 반환
+
+    Note over Dev,GH: PR 리뷰
+
+    Dev->>Claude: "PR #N을 리뷰해줘"
+    Claude->>GH: PR 정보 조회
+    Claude->>Claude: 코드 분석
+    Claude-->>Dev: 리뷰 결과 제공
+
+    Note over Dev,GH: 문서 업데이트
+
+    Dev->>Claude: /document_update
+    Claude->>Claude: 코드베이스 분석
+    Claude->>Claude: 문서 최신화
+    Claude-->>Dev: 업데이트 완료
+```
+
+---
+
 ## 참고
 
 - [CI/CD 설계](ci-cd.md) - GitHub Actions 워크플로우 상세

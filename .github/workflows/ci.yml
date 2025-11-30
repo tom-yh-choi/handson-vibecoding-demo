@@ -178,7 +178,7 @@ jobs:
         run: cd frontend && npx playwright install --with-deps chromium
 
       - name: E2E 테스트 실행
-        run: cd frontend && npx playwright test e2e/todo.spec.ts
+        run: cd frontend && npx playwright test e2e/todo.spec.ts --project=chromium
 
       - name: 테스트 결과 업로드
         uses: actions/upload-artifact@v4

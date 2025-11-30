@@ -600,6 +600,7 @@ git branch -d feat/123-feature-name
 ### 10.1 커스텀 명령어
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 flowchart LR
     subgraph Commands["커스텀 명령어"]
         A["/make-pr"] --> A1["PR 생성 워크플로우 자동화"]
@@ -626,6 +627,7 @@ flowchart LR
 ### 10.2 커스텀 에이전트
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 flowchart TD
     subgraph Agent["pr-reviewer 에이전트"]
         A["PR 리뷰 요청"] --> B["gh cli로 PR 정보 조회"]
@@ -669,6 +671,7 @@ flowchart TD
 ### 10.4 자동화 워크플로우
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
     participant Dev as 개발자
     participant Claude as Claude Code

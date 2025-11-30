@@ -5,6 +5,7 @@ import { DatabaseStack } from '../lib/database/database-stack';
 import { AuthStack } from '../lib/auth/auth-stack';
 import { LambdaStack } from '../lib/lambda/lambda-stack';
 import { ApiStack } from '../lib/api/api-stack';
+import { MonitoringStack } from '../lib/monitoring/monitoring-stack';
 
 const app = new cdk.App();
 
@@ -30,7 +31,19 @@ const lambdaStack = new LambdaStack(app, 'TodoAppLambdaStack', databaseStack, au
   },
 });
 
-new ApiStack(app, 'TodoAppApiStack', lambdaStack, authStack, {
+const apiStack = new ApiStack(app, 'TodoAppApiStack', lambdaStack, authStack, {
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
+});
+
+new MonitoringStack(app, 'TodoAppMonitoringStack', {
+  todoLambda: lambdaStack.todoLambda,
+  userLambda: lambdaStack.userLambda,
+  api: apiStack.api,
+  todoTable: databaseStack.todoTable,
+  userTable: databaseStack.userTable,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,

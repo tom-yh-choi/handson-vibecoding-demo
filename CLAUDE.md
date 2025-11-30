@@ -174,8 +174,52 @@ GitHub Issue 연동:
 - 기능 브랜치는 `main` 또는 `develop`에서 분기
 - PR을 통해 머지, 직접 push 금지
 
+## GitHub Labels
+
+Issue 및 PR 생성 시 적절한 라벨 조합 사용:
+
+### Type (필수)
+| 라벨 | 설명 |
+|------|------|
+| `type:feat` | 새로운 기능 |
+| `type:fix` | 버그 수정 |
+| `type:docs` | 문서 변경 |
+| `type:refactor` | 코드 리팩토링 |
+| `type:test` | 테스트 추가/수정 |
+| `type:chore` | 빌드/설정 변경 |
+
+### Scope (필수)
+| 라벨 | 설명 |
+|------|------|
+| `scope:frontend` | 프론트엔드 관련 |
+| `scope:backend` | 백엔드 관련 |
+| `scope:shared` | 공유 모듈 관련 |
+| `scope:infra` | 인프라/DevOps 관련 |
+
+### Priority (선택)
+| 라벨 | 설명 |
+|------|------|
+| `priority:high` | 높은 우선순위 |
+| `priority:medium` | 중간 우선순위 |
+| `priority:low` | 낮은 우선순위 |
+
+### Status (선택)
+| 라벨 | 설명 |
+|------|------|
+| `status:blocked` | 차단됨/대기 중 |
+| `status:in-progress` | 진행 중 |
+| `status:review` | 리뷰 대기 |
+
+### 특수 라벨
+| 라벨 | 설명 |
+|------|------|
+| `devops` | DevOps 프로젝트 |
+| `ci/cd` | CI/CD 파이프라인 |
+| `dependencies` | 의존성 업데이트 |
+
 ## Documentation
 
 - 문서는 코드와 함께 업데이트
 - 복잡한 로직/알고리즘은 주석으로 설명
 - 설계 문서: [docs/design/](docs/design/)
+- DevOps 문서: [docs/DevOps/](docs/DevOps/)

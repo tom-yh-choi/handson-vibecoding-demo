@@ -29,25 +29,27 @@ DevOps 학습 및 실습을 위한 체계를 **MVP 방식**으로 빠르게 구�
 
 | 영역 | 현황 | 상태 |
 |------|------|------|
-| **CI** | Playwright E2E 테스트 (main 브랜치) | ✅ 구성됨 |
+| **CI** | 통합 CI 파이프라인 (lint/build/test/CDK synth) | ✅ 구성됨 |
 | **CD** | GitHub Pages 프론트엔드 배포 | ✅ 구성됨 |
 | **Pre-commit** | lint fix → build → test 자동 실행 | ✅ 구성됨 |
+| **E2E** | Playwright 크로스브라우저 테스트 | ✅ 구성됨 |
 | **IaC** | AWS CDK 스택 정의 (설계 문서만 존재) | ⚠️ 미구현 |
 | **Monitoring** | CloudWatch 설계 문서만 존재 | ⚠️ 미구현 |
-| **Backend CI/CD** | 없음 | ❌ 없음 |
+| **Backend CD** | CDK 자동 배포 | ⏸️ 미구현 |
 
 ### 2.2 GitHub Actions 워크플로우 현황
 
 ```
 .github/workflows/
+├── ci.yml                # 통합 CI 파이프라인 (린트/빌드/테스트/CDK synth)
 ├── playwright.yml        # E2E 테스트 (main push/PR)
 └── deploy-frontend.yml   # 프론트엔드 배포 (main push)
 ```
 
 ### 2.3 개선 필요 영역 (MVP 관점)
 
-1. **CI 파이프라인** - PR 품질 게이트 없음
-2. **백엔드 CI/CD** - 전무
+1. ~~**CI 파이프라인** - PR 품질 게이트 없음~~ ✅ 완료
+2. **백엔드 CD** - CDK 자동 배포 미구현
 3. **개발 생산성** - PR/Issue 템플릿 없음
 
 ---
@@ -149,24 +151,24 @@ jobs:
 
 | 순위 | 항목 | 예상 소요 | 비용 | 상태 |
 |------|------|----------|------|------|
-| **MVP-1** | PR Quality Gate | 2시간 | $0 | 🔴 미시작 |
+| **MVP-1** | PR Quality Gate (CI 파이프라인) | 2시간 | $0 | ✅ 완료 |
 | **MVP-2** | GitHub 템플릿 | 1시간 | $0 | 🔴 미시작 |
 | **MVP-3** | Dependabot | 30분 | $0 | 🔴 미시작 |
 | **MVP-4** | 백엔드 CD | 4시간 | $0 | 🔴 미시작 |
 | **추후** | 모니터링 대시보드 | - | $0 | ⏸️ 보류 |
 | **추후** | 알림 체계 | - | $0 | ⏸️ 보류 |
 
-**총 예상 소요 시간: 1-2일**
+**완료된 항목: MVP-1 (CI 파이프라인)**
 
 ---
 
 ## 5. 성공 기준 (MVP)
 
 ### 5.1 필수 달성
-- [ ] PR 생성 시 자동 품질 검사 실행
+- [x] PR 생성 시 자동 품질 검사 실행
 - [ ] main 머지 후 백엔드 자동 배포
 - [ ] PR/Issue 템플릿 적용
-- [ ] **월 비용 $0 유지**
+- [x] **월 비용 $0 유지**
 
 ### 5.2 선택 달성
 - [ ] 테스트 커버리지 리포트
@@ -177,11 +179,10 @@ jobs:
 ## 6. 다음 단계
 
 1. ~~Pre PRD 작성~~ ✅
-2. **GitHub Issues 생성**: MVP 항목별 이슈 생성
-3. **MVP-1 구현**: PR Quality Gate
-4. **MVP-2 구현**: GitHub 템플릿
-5. **MVP-3 구현**: Dependabot
-6. **MVP-4 구현**: 백엔드 CD
+2. ~~**MVP-1 구현**: CI 파이프라인 (PR Quality Gate)~~ ✅
+3. **MVP-2 구현**: GitHub 템플릿
+4. **MVP-3 구현**: Dependabot
+5. **MVP-4 구현**: 백엔드 CD (AWS OIDC + CDK 배포)
 
 ---
 

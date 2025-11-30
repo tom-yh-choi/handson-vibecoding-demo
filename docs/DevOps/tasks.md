@@ -4,56 +4,57 @@
 
 ---
 
-## MVP-1: PR Quality Gate
+## MVP-1: PR Quality Gate ✅ 완료
+
+> `.github/workflows/ci.yml`로 통합 CI 파이프라인 구현 완료
 
 ### 1.1 워크플로우 파일 생성
-- [ ] `.github/workflows/pr-check.yml` 파일 생성
-- [ ] 워크플로우 이름 설정 (`name: PR Check`)
-- [ ] 트리거 설정 (`on: pull_request`, `branches: [main]`)
+- [x] `.github/workflows/ci.yml` 파일 생성
+- [x] 워크플로우 이름 설정 (`name: CI`)
+- [x] 트리거 설정 (`on: push/pull_request`, `branches: [main]`)
 
 ### 1.2 기본 환경 설정
-- [ ] `actions/checkout@v4` 추가
-- [ ] `actions/setup-node@v4` 추가
-- [ ] Node.js 버전 설정 (22)
-- [ ] npm 캐시 설정 (`cache: 'npm'`)
+- [x] `actions/checkout@v4` 추가
+- [x] `actions/setup-node@v4` 추가
+- [x] Node.js 버전 설정 (22)
+- [x] npm 캐시 설정 (`cache: 'npm'`)
 
 ### 1.3 루트 의존성 설치
-- [ ] `npm ci` 명령어 추가
-- [ ] HUSKY=0 환경 변수 설정 (husky 설치 스킵)
+- [x] `npm ci` 명령어 추가
+- [x] HUSKY=0 환경 변수 설정 (husky 설치 스킵)
 
 ### 1.4 Shared 패키지 빌드
-- [ ] shared 디렉토리 이동
-- [ ] shared 의존성 설치 (`npm ci`)
-- [ ] shared 빌드 (`npm run build`)
+- [x] setup job에서 shared 빌드
+- [x] artifact로 빌드 결과물 공유
 
 ### 1.5 Frontend 검증
-- [ ] frontend lint 실행 (`npm run frontend:lint`)
-- [ ] frontend 빌드 (`npm run frontend:build`)
-- [ ] frontend 테스트 (`npm run frontend:test`)
+- [x] frontend lint 실행 (`npm run frontend:lint`)
+- [x] frontend 빌드 (`npm run frontend:build`)
+- [x] frontend 테스트 (`npm run frontend:test`)
 
 ### 1.6 Backend 검증
-- [ ] backend lint 실행 (`npm run backend:lint`)
-- [ ] backend 빌드 (`npm run backend:build`)
-- [ ] backend 테스트 (`npm run backend:test`)
+- [x] backend lint 실행 (`npm run backend:lint`)
+- [x] backend 빌드 (`npm run backend:build`)
+- [x] backend 테스트 (`npm run backend:test`)
+- [x] CDK synth 검증 (`npm run cdk:synth`)
 
 ### 1.7 워크플로우 최적화
-- [ ] 작업 병렬화 설정 (matrix 또는 separate jobs)
-- [ ] `fail-fast: false` 설정
-- [ ] 캐시 키에 `package-lock.json` 해시 사용
+- [x] 작업 병렬화 설정 (setup → frontend/backend 병렬 → e2e)
+- [x] concurrency 설정으로 중복 실행 취소
+- [x] 캐시 키에 `package-lock.json` 해시 사용
+- [x] artifact로 shared 빌드 결과물 공유
 
-### 1.8 Branch Protection Rule
-- [ ] GitHub 저장소 Settings 접근
-- [ ] Branches 메뉴 이동
-- [ ] `main` 브랜치 protection rule 추가
-- [ ] "Require a pull request before merging" 체크
-- [ ] "Require status checks to pass" 체크
-- [ ] `PR Check` 워크플로우를 required로 추가
-- [ ] "Require branches to be up to date" 체크
+### 1.8 E2E 테스트 통합
+- [x] Playwright chromium 프로젝트 실행
+- [x] 테스트 결과 artifact 업로드
 
-### 1.9 기존 워크플로우 개선
-- [ ] `playwright.yml` 캐싱 추가
-- [ ] `deploy-frontend.yml` 캐싱 추가
-- [ ] 중복 설정 제거
+### 1.9 CI 상태 체크
+- [x] ci-status job으로 최종 상태 확인
+- [x] Branch Protection용 상태 체크 제공
+
+### 1.10 기존 워크플로우 개선
+- [x] `playwright.yml` 캐싱 및 concurrency 추가
+- [x] `deploy-frontend.yml` 캐싱 최적화
 
 ---
 

@@ -223,3 +223,112 @@ Issue 및 PR 생성 시 적절한 라벨 조합 사용:
 - 복잡한 로직/알고리즘은 주석으로 설명
 - 설계 문서: [docs/design/](docs/design/)
 - DevOps 문서: [docs/DevOps/](docs/DevOps/)
+
+## Mermaid 다이어그램 스타일 가이드
+
+다크/라이트 모드 모두에서 가독성을 보장하는 Mermaid 다이어그램 작성 규칙입니다.
+
+### 기본 원칙
+
+- **색상 하드코딩 금지**: `fill:#ffffff` 같은 하드코딩된 색상 사용 금지
+- **CSS 변수 활용**: GitHub/IDE 테마에 자동 적응하도록 기본 스타일 유지
+- **고대비 유지**: 텍스트와 배경 간 충분한 대비 확보
+
+### 권장 스타일
+
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+flowchart TD
+    A[시작] --> B[처리]
+    B --> C{조건}
+    C -->|Yes| D[완료]
+    C -->|No| E[재시도]
+```
+
+### 테마 설정
+
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+```
+
+- `neutral`: 다크/라이트 모드 모두 호환 (권장)
+- `default`: GitHub 기본 테마 따름
+- `base`: 최소 스타일링
+
+### 피해야 할 패턴
+
+```markdown
+<!-- ❌ 잘못된 예 -->
+style A fill:#ffffff,stroke:#000000
+style B fill:#1a1a1a,color:#ffffff
+
+<!-- ✅ 올바른 예 -->
+flowchart TD
+    A[노드] --> B[노드]
+```
+
+### 다이어그램 유형별 가이드
+
+#### Flowchart
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+flowchart TD
+    subgraph 그룹명["제목"]
+        A[작업1] --> B[작업2]
+    end
+```
+
+#### Sequence Diagram
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+sequenceDiagram
+    participant A as 사용자
+    participant B as 서버
+    A->>B: 요청
+    B-->>A: 응답
+```
+
+#### State Diagram
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+stateDiagram-v2
+    [*] --> 대기
+    대기 --> 처리중: 시작
+    처리중 --> 완료: 성공
+```
+
+#### Git Graph
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+gitGraph
+    commit id: "init"
+    branch feature
+    commit id: "feat"
+    checkout main
+    merge feature
+```
+
+### 노드 형태 가이드
+
+| 형태 | 문법 | 용도 |
+|------|------|------|
+| 사각형 | `[텍스트]` | 일반 작업/프로세스 |
+| 둥근 사각형 | `(텍스트)` | 시작/종료 |
+| 마름모 | `{텍스트}` | 조건/분기 |
+| 원형 | `((텍스트))` | 연결점 |
+| 육각형 | `{{텍스트}}` | 준비/설정 |
+
+### 화살표 스타일
+
+| 스타일 | 문법 | 용도 |
+|--------|------|------|
+| 실선 | `-->` | 일반 흐름 |
+| 점선 | `-.->` | 선택적/비동기 |
+| 굵은 선 | `==>` | 주요 흐름 강조 |
+| 라벨 | `--\|라벨\|-->` | 조건/설명 |
+
+### 접근성 고려사항
+
+- 색상만으로 정보 구분 금지 (형태/라벨 병행)
+- 복잡한 다이어그램은 텍스트 설명 추가
+- 한글 사용 시 따옴표로 감싸기: `["한글 텍스트"]`

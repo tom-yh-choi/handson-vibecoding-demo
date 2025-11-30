@@ -30,6 +30,20 @@
   - 배포 구성
   - 모니터링 구성
 
+- [CI/CD 설계](ci-cd.md)
+  - GitHub Actions 워크플로우
+  - CI 파이프라인 (린트, 빌드, 테스트)
+  - E2E 테스트 (Playwright)
+  - 프론트엔드 배포 (GitHub Pages)
+  - 캐싱 전략
+
+- [개발 워크플로우](workflow.md)
+  - Issue 기반 작업 관리
+  - 브랜치 전략
+  - Pre-commit Hook
+  - PR 워크플로우
+  - 커밋 메시지 컨벤션
+
 - [보안 설계](security.md)
   - 인증 및 인가
   - 데이터 보안
